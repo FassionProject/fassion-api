@@ -2,11 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import * as cookieParser from 'cookie-parser';
-import { LoggerInterceptor } from './utils/logger/logger/logger.interceptor';
-import * as winston from 'winston';
-import { createLogger, format, transports } from 'winston';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-const { combine, timestamp, prettyPrint } = format;
+import { JsonResponseInterceptor } from './utils/json-response/json-response.interceptor';
+import { Document } from './utils/document/document';
+import { HTTPLogInterceptor } from './utils/log/http-log.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,24 +15,10 @@ async function bootstrap() {
   const loggerService = app.get(WINSTON_MODULE_NEST_PROVIDER);
   app.useLogger(loggerService);
 
-  const logger = createLogger({
-    level: 'info',
-    format: combine(timestamp(), format.json()),
-    transports: [new winston.transports.Console()],
-  });
+  app.useGlobalInterceptors(new HTTPLogInterceptor());
+  app.useGlobalInterceptors(new JsonResponseInterceptor());
 
-  app.useGlobalInterceptors(new LoggerInterceptor(logger));
-
-  const config = new DocumentBuilder()
-    .setTitle('Fassion API')
-    .setDescription('The Fassion API description')
-    .setVersion('1.0')
-    .addTag('Product')
-    .addTag('ProductCategory')
-    .addTag('ProductTag')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('swagger', app, document);
+  Document.setup(app);
 
   await app.listen(3000);
 }

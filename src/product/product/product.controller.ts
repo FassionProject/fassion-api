@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
 } from '@nestjs/common';
 import {
   CreateProductRequest,
@@ -13,12 +14,9 @@ import {
   UpdateProductRequest,
 } from './product.model';
 import { ProductService } from './product.service';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { response } from 'express';
-import {
-  ResponseFormatter,
-  OkResponse,
-} from 'src/lib/response-formatter/response-formatter';
+import { ApiCreatedJsonResponse } from 'src/utils/json-response/json-response.decorator';
 
 @ApiTags('Product')
 @Controller('product')
@@ -26,13 +24,9 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
-  @ApiResponse({
-    status: 201,
-    description: 'The record has been successfully created.',
-    type: OkResponse<CreateProductRequest>,
-  })
+  @ApiCreatedJsonResponse(ProductResponse)
   create(@Body() product: CreateProductRequest) {
-    return response.json(this.productService.create(product));
+    return this.productService.create(product);
   }
 
   @Get()

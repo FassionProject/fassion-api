@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProductRequest, UpdateProductRequest } from './product.model';
+import {
+  CreateProductRequest,
+  ProductResponse,
+  UpdateProductRequest,
+} from './product.model';
 
 @Injectable()
 export class ProductService {
   create(product: CreateProductRequest) {
-    return 'This action adds a new product';
+    return new ProductResponse();
   }
 
   findAll() {
