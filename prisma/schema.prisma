@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model File {
+  file       String   @id
+  content    Bytes
+  created_at DateTime @default(now())
+  created_by String
+  created_ip String
+  updated_at DateTime @updatedAt
+  updated_by String
+  updated_ip String
+  deleted_at DateTime
+  deleted_by String
+  deleted_ip String
+
+  @@map("file")
+}
+
+model ProductCategory {
+  id          String    @id @default(uuid())
+  description String
+  products    Product[]
+
+  created_at DateTime @default(now())
+  created_by String
+  created_ip String
+  updated_at DateTime @updatedAt
+  updated_by String
+  updated_ip String
+  deleted_at DateTime
+  deleted_by String
+  deleted_ip String
+
+  @@map("product_category")
+}
+
+model ProductTag {
+  id          String    @id @default(uuid())
+  store_id    String?
+  description String
+  products    Product[] @relation(name: "product_to_tag")
+
+  created_at DateTime @default(now())
+  created_by String
+  created_ip String
+  updated_at DateTime @updatedAt
+  updated_by String
+  updated_ip String
+  deleted_at DateTime
+  deleted_by String
+  deleted_ip String
+  Product    Product? @relation(fields: [productId], references: [id])
+  productId  String?
+
+  @@map("product_tag")
+}
+
+model ProductImage {
+  id         String  @id @default(uuid())
+  product_id String
+  image      String
+  product    Product @relation(fields: [product_id], references: [id])
+
+  created_at DateTime @default(now())
+  created_by String
+  created_ip String
+  updated_at DateTime @updatedAt
+  updated_by String
+  updated_ip String
+  deleted_at DateTime
+  deleted_by String
+  deleted_ip String
+
+  @@map("product_image")
+}
+
+model Product {
+  id          String          @id @default(uuid())
+  store_id    String?
+  category_id String
+  name        String
+  description String
+  thumbnail   String
+  price       Float
+  stock       Int
+  category    ProductCategory @relation(fields: [category_id], references: [id])
+  tags        ProductTag[]    @relation("product_to_tag")
+  images      ProductImage[]
+
+  created_at DateTime     @default(now())
+  created_by String
+  created_ip String
+  updated_at DateTime     @updatedAt
+  updated_by String
+  updated_ip String
+  deleted_at DateTime
+  deleted_by String
+  deleted_ip String
+  ProductTag ProductTag[]
+
+  @@map("product")
+}
