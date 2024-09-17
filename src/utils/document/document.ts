@@ -13,6 +13,6 @@ const swaggerConfig = new DocumentBuilder()
 export class Document {
   static setup(app: INestApplication) {
     const factory = SwaggerModule.createDocument(app, swaggerConfig);
-    SwaggerModule.setup('swagger', app, factory);
+    SwaggerModule.setup('', app, factory);
   }
 }

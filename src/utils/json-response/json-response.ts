@@ -25,12 +25,17 @@ export class JsonResponse<T> {
   @ApiProperty()
   data?: T;
 
-  static format<T>(
-    result: number,
-    status: HttpStatus,
-    message?: string,
-    data?: T,
-  ): JsonResponse<T> {
+  static format<T>({
+    result = 1,
+    status = HttpStatus.OK,
+    message = HttpStatusMessage[status] || status.toString(),
+    data,
+  }: {
+    result: number;
+    status: HttpStatus;
+    message?: string;
+    data?: T;
+  }): JsonResponse<T> {
     return {
       result,
       status,
@@ -41,20 +46,29 @@ export class JsonResponse<T> {
     };
   }
 
-  static success<T>(
-    data: T,
-    result: number = 1,
-    status: number = 200,
-    message?: string,
-  ): JsonResponse<T> {
-    return this.format(result, status, message, data);
+  static success<T>({
+    data,
+    result = 1,
+    status = HttpStatus.OK,
+    message = HttpStatusMessage[status] || status.toString(),
+  }: {
+    data?: T;
+    result?: number;
+    status?: HttpStatus;
+    message?: string;
+  }): JsonResponse<T> {
+    return this.format({ result, status, message, data });
   }
 
-  static error<T>(
-    errors: T,
-    status: number = 500,
-    message: string = 'Internal Server Error',
-  ): JsonResponse<T> {
-    return this.format(-1, status, message, errors);
+  static error<T>({
+    errors,
+    status = HttpStatus.INTERNAL_SERVER_ERROR,
+    message = HttpStatusMessage[status] || status.toString(),
+  }: {
+    errors?: T;
+    status?: HttpStatus;
+    message?: string;
+  }): JsonResponse<T> {
+    return this.format({ result: -1, status, message, data: errors });
   }
 }

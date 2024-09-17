@@ -16,7 +16,9 @@ export class JsonResponseInterceptor implements NestInterceptor {
     const response = context.switchToHttp().getResponse();
     return next.handle().pipe(
       map((data) => {
-        return JsonResponse.success(data);
+        return JsonResponse.success({
+          data: data,
+        });
       }),
       tap(() => {
         response.status(200);

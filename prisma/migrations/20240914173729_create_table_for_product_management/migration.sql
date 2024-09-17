@@ -8,9 +8,9 @@ CREATE TABLE "file" (
     "updated_at" TIMESTAMP(3) NOT NULL,
     "updated_by" TEXT NOT NULL,
     "updated_ip" TEXT NOT NULL,
-    "deleted_at" TIMESTAMP(3) NOT NULL,
-    "deleted_by" TEXT NOT NULL,
-    "deleted_ip" TEXT NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+    "deleted_by" TEXT,
+    "deleted_ip" TEXT,
 
     CONSTRAINT "file_pkey" PRIMARY KEY ("file")
 );
@@ -25,9 +25,9 @@ CREATE TABLE "product_category" (
     "updated_at" TIMESTAMP(3) NOT NULL,
     "updated_by" TEXT NOT NULL,
     "updated_ip" TEXT NOT NULL,
-    "deleted_at" TIMESTAMP(3) NOT NULL,
-    "deleted_by" TEXT NOT NULL,
-    "deleted_ip" TEXT NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+    "deleted_by" TEXT,
+    "deleted_ip" TEXT,
 
     CONSTRAINT "product_category_pkey" PRIMARY KEY ("id")
 );
@@ -43,9 +43,9 @@ CREATE TABLE "product_tag" (
     "updated_at" TIMESTAMP(3) NOT NULL,
     "updated_by" TEXT NOT NULL,
     "updated_ip" TEXT NOT NULL,
-    "deleted_at" TIMESTAMP(3) NOT NULL,
-    "deleted_by" TEXT NOT NULL,
-    "deleted_ip" TEXT NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+    "deleted_by" TEXT,
+    "deleted_ip" TEXT,
     "productId" TEXT,
 
     CONSTRAINT "product_tag_pkey" PRIMARY KEY ("id")
@@ -62,9 +62,9 @@ CREATE TABLE "product_image" (
     "updated_at" TIMESTAMP(3) NOT NULL,
     "updated_by" TEXT NOT NULL,
     "updated_ip" TEXT NOT NULL,
-    "deleted_at" TIMESTAMP(3) NOT NULL,
-    "deleted_by" TEXT NOT NULL,
-    "deleted_ip" TEXT NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+    "deleted_by" TEXT,
+    "deleted_ip" TEXT,
 
     CONSTRAINT "product_image_pkey" PRIMARY KEY ("id")
 );
@@ -85,9 +85,9 @@ CREATE TABLE "product" (
     "updated_at" TIMESTAMP(3) NOT NULL,
     "updated_by" TEXT NOT NULL,
     "updated_ip" TEXT NOT NULL,
-    "deleted_at" TIMESTAMP(3) NOT NULL,
-    "deleted_by" TEXT NOT NULL,
-    "deleted_ip" TEXT NOT NULL,
+    "deleted_at" TIMESTAMP(3),
+    "deleted_by" TEXT,
+    "deleted_ip" TEXT,
 
     CONSTRAINT "product_pkey" PRIMARY KEY ("id")
 );
