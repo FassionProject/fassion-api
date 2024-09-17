@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { randomUUID } from 'crypto';
 import { ProductEntity } from '../product/product.model';
 import { Prisma } from '@prisma/client';
+import * as moment from 'moment';
 
 export class ProductCategoryEntity
   implements Prisma.ProductCategoryGetPayload<{ include: { parent: true } }>
@@ -21,7 +22,7 @@ export class ProductCategoryEntity
   @ApiProperty({ type: [ProductEntity] })
   products: ProductEntity[] = [];
 
-  @ApiProperty({ example: new Date() })
+  @ApiProperty({ example: moment().toDate() })
   createdAt: Date | null = null;
 
   @ApiProperty({ example: 'Admin' })
@@ -30,7 +31,7 @@ export class ProductCategoryEntity
   @ApiProperty({ example: '127.0.0.1' })
   createdIp: string | null = null;
 
-  @ApiProperty({ example: new Date() })
+  @ApiProperty({ example: moment().toDate() })
   updatedAt: Date | null = null;
 
   @ApiProperty({ example: 'Admin' })

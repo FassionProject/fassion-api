@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DatabaseService } from '../src/common/database/database.service';
 import { randomInt } from 'crypto';
+import * as moment from 'moment';
 
 @Injectable()
 export class TestService {
@@ -26,10 +27,10 @@ export class TestService {
       data: {
         description: description,
         parentId: null,
-        createdAt: new Date(),
+        createdAt: moment().toDate(),
         createdBy: 'unknown',
         createdIp: 'unknown',
-        updatedAt: new Date(),
+        updatedAt: moment().toDate(),
         updatedBy: 'unknown',
         updatedIp: 'unknown',
       },
@@ -44,10 +45,10 @@ export class TestService {
       data: {
         description: description,
         parentId: parentId || (await this.createParentProductCategory()).id,
-        createdAt: new Date(),
+        createdAt: moment().toDate(),
         createdBy: 'unknown',
         createdIp: 'unknown',
-        updatedAt: new Date(),
+        updatedAt: moment().toDate(),
         updatedBy: 'unknown',
         updatedIp: 'unknown',
       },

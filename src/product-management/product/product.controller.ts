@@ -21,7 +21,7 @@ import { response } from 'express';
 import { ApiCreatedJsonResponse } from '../../utils/json-response/json-response.decorator';
 import { AuditInfo } from '@src/common/audit/audit.decorator';
 import { Audit } from '@src/common/audit/audit.model';
-import { ListModel } from '@src/utils/model/model';
+import { ListModel } from '@src/utils/model/list-model.model';
 import 'reflect-metadata';
 
 export function ApiQueriesFromRequest() {

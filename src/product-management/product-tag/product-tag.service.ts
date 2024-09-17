@@ -13,7 +13,7 @@ import { ProductTagValidation } from './product-tag.validation';
 import { Audit } from '../../common/audit/audit.model';
 import { randomUUID } from 'crypto';
 import { Utils } from '../../utils/utils';
-import { ListModel } from '@src/utils/model/model';
+import { ListModel } from '@src/utils/model/list-model.model';
 import { Prisma } from '@prisma/client';
 import { ProductEntity } from '../product/product.model';
 

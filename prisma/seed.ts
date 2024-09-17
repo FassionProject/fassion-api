@@ -1,14 +1,15 @@
 import { PrismaClient } from '@prisma/client';
 import { randomUUID } from 'crypto';
 import { ProductCategorySeeder } from './product-category.seed';
+import * as moment from 'moment';
 
 const prisma: PrismaClient = new PrismaClient();
 
 export const auditInfo = {
-  createdAt: new Date(),
+  createdAt: moment().toDate(),
   createdBy: 'Seed',
   createdIp: '127.0.0.1',
-  updatedAt: new Date(),
+  updatedAt: moment().toDate(),
   updatedBy: 'Seed',
   updatedIp: '127.0.0.1',
   deletedAt: null,

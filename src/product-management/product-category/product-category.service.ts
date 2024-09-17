@@ -14,7 +14,7 @@ import { randomUUID } from 'crypto';
 import { Audit } from '../../common/audit/audit.model';
 import { Utils } from '../../utils/utils';
 import { Prisma } from '@prisma/client';
-import { ListModel } from '@src/utils/model/model';
+import { ListModel } from '@src/utils/model/list-model.model';
 
 @Injectable()
 export class ProductCategoryService {
@@ -246,7 +246,7 @@ export class ProductCategoryService {
             id: id,
           },
           data: {
-            deletedAt: new Date(),
+            deletedAt: audit.timestamp,
             deletedBy: audit.user,
             deletedIp: audit.ip,
           },

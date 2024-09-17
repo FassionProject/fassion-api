@@ -30,10 +30,10 @@ export class ProductCategoryController {
   @Post()
   @ApiCreatedJsonResponse(ProductCategoryEntity)
   async create(
-    @Body() productCategpry: CreateProductCategoryRequest,
+    @Body() request: CreateProductCategoryRequest,
     @AuditInfo() audit: Audit,
   ): Promise<any> {
-    return await this.productCategoryService.create(productCategpry, audit);
+    return await this.productCategoryService.create(request, audit);
   }
 
   @Get()
@@ -50,10 +50,10 @@ export class ProductCategoryController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() productCategpry: UpdateProductCategoryRequest,
+    @Body() request: UpdateProductCategoryRequest,
     @AuditInfo() audit: Audit,
   ) {
-    return this.productCategoryService.update(id, productCategpry, audit);
+    return this.productCategoryService.update(id, request, audit);
   }
 
   @Delete(':id')

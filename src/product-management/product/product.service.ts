@@ -12,7 +12,7 @@ import { ProductValidation } from './product.validation';
 import { Logger } from 'winston';
 import { Audit } from '@src/common/audit/audit.model';
 import { randomUUID } from 'crypto';
-import { ListModel } from '@src/utils/model/model';
+import { ListModel } from '@src/utils/model/list-model.model';
 import { Utils } from '@src/utils/utils';
 @Injectable()
 export class ProductService {

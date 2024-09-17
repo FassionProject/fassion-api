@@ -28,10 +28,10 @@ export class ProductTagController {
   @Post()
   @ApiCreatedJsonResponse(ProductTagEntity)
   async create(
-    @Body() productCategpry: CreateProductTagRequest,
+    @Body() request: CreateProductTagRequest,
     @AuditInfo() audit: Audit,
   ): Promise<any> {
-    return await this.productTagService.create(productCategpry, audit);
+    return await this.productTagService.create(request, audit);
   }
 
   @Get()
@@ -47,10 +47,10 @@ export class ProductTagController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() productCategpry: UpdateProductTagRequest,
+    @Body() request: UpdateProductTagRequest,
     @AuditInfo() audit: Audit,
   ) {
-    return this.productTagService.update(id, productCategpry, audit);
+    return this.productTagService.update(id, request, audit);
   }
 
   @Delete(':id')
