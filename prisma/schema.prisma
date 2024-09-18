@@ -14,8 +14,9 @@ datasource db {
 }
 
 model File {
-  file    String @id @map("file")
-  content Bytes  @map("content")
+  file     String @id @map("file")
+  mimetype String @map("mimetype")
+  content  Bytes  @map("content")
 
   createdAt DateTime  @default(now()) @map("created_at")
   createdBy String    @map("created_by")
@@ -33,7 +34,7 @@ model File {
 model ProductCategory {
   id            String            @id @default(uuid()) @map("id")
   parentId      String?           @map("parent_id")
-  description   String            @map("description")
+  description   String            @unique @map("description")
   products      Product[]
   parent        ProductCategory?  @relation("parent_category", fields: [parentId], references: [id])
   subCategories ProductCategory[] @relation("parent_category")
@@ -54,7 +55,7 @@ model ProductCategory {
 model ProductTag {
   id          String    @id @default(uuid()) @map("id")
   storeId     String?   @map("store_id")
-  description String    @map("description")
+  description String    @unique @map("description")
   products    Product[] @relation(name: "product_to_tag")
 
   createdAt DateTime  @default(now()) @map("created_at")
@@ -73,7 +74,7 @@ model ProductTag {
 model ProductImage {
   id        String  @id @default(uuid())
   productId String  @map("product_id")
-  image     String  @map("image")
+  image     String  @unique @map("image")
   product   Product @relation(fields: [productId], references: [id])
 
   createdAt DateTime  @default(now()) @map("created_at")
@@ -93,7 +94,7 @@ model Product {
   id          String          @id @default(uuid()) @map("id")
   storeId     String?         @map("store_id")
   categoryId  String          @map("category_id")
-  name        String          @map("name")
+  name        String          @unique @map("name")
   description String          @map("description")
   thumbnail   String?         @map("thumbnail")
   price       Float           @map("price")

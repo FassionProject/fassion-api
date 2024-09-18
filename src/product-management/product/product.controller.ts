@@ -8,6 +8,9 @@ import {
   Delete,
   Query,
   applyDecorators,
+  UseInterceptors,
+  UploadedFile,
+  UploadedFiles,
 } from '@nestjs/common';
 import {
   CreateProductRequest,
@@ -16,13 +19,20 @@ import {
   UpdateProductRequest,
 } from './product.model';
 import { ProductService } from './product.service';
-import { ApiExtraModels, ApiQuery, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiExtraModels,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { response } from 'express';
 import { ApiCreatedJsonResponse } from '../../utils/json-response/json-response.decorator';
 import { AuditInfo } from '@src/common/audit/audit.decorator';
 import { Audit } from '@src/common/audit/audit.model';
 import { ListModel } from '@src/utils/model/list-model.model';
 import 'reflect-metadata';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 
 export function ApiQueriesFromRequest() {
   const decorators = [];
@@ -59,11 +69,14 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Post()
+  @UseInterceptors(FilesInterceptor('images'))
   @ApiCreatedJsonResponse(ProductEntity)
+  @ApiConsumes('multipart/form-data')
   async create(
+    @UploadedFiles() images: Express.Multer.File[],
     @Body() product: CreateProductRequest,
     @AuditInfo() audit: Audit,
-  ): Promise<ProductEntity> {
+  ): Promise<any> {
     return await this.productService.create(product, audit);
   }
 

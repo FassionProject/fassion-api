@@ -5,13 +5,21 @@ import { ProductCategoryController } from './product-category/product-category.c
 import { ProductTagController } from './product-tag/product-tag.controller';
 import { ProductCategoryService } from './product-category/product-category.service';
 import { ProductTagService } from './product-tag/product-tag.service';
+import { ProductImageController } from './product-image/product-image.controller';
+import { ProductImageService } from './product-image/product-image.service';
 
 @Module({
   controllers: [
     ProductController,
     ProductCategoryController,
     ProductTagController,
+    ProductImageController,
   ],
-  providers: [ProductService, ProductCategoryService, ProductTagService],
+  providers: [
+    ProductService,
+    ProductCategoryService,
+    ProductTagService,
+    ProductImageService,
+  ],
 })
 export class ProductManagementModule {}

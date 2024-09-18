@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { randomUUID } from 'crypto';
 import { Prisma } from '@prisma/client';
 import * as moment from 'moment';
+import { ProductCategoryEntity } from '../product-category/product-category.model';
 
 export class ProductEntity implements Prisma.ProductGetPayload<{}> {
   @ApiProperty({ example: randomUUID() })
@@ -58,6 +59,8 @@ export class ProductEntity implements Prisma.ProductGetPayload<{}> {
   deletedIp: string | null = null;
 
   constructor(partial: Partial<ProductEntity>) {
+    // partial.category =
+    //   partial.category ?? new ProductCategoryEntity(partial.category);
     Object.assign(this, partial);
   }
 }
@@ -86,6 +89,14 @@ export class CreateProductRequest {
 
   @ApiProperty({ example: 10, required: true })
   stock?: number;
+
+  @ApiProperty({
+    type: 'file',
+    required: false,
+    isArray: true,
+    format: 'binary',
+  })
+  images?: Express.Multer.File;
 }
 
 export class UpdateProductRequest {

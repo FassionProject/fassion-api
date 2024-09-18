@@ -33,13 +33,11 @@ export class DatabaseService
       ],
     });
 
-    createModelExtends(this);
-
     this.logger.info(
       `Connected to database at ${this.config.get('DATABASE_URL')}`,
     );
   }
-  onModuleInit() {
+  async onModuleInit() {
     this.$on('query', (e) => {
       this.logger.info(e);
     });
@@ -55,37 +53,11 @@ export class DatabaseService
     this.$on('info', (e) => {
       this.logger.info(e);
     });
+
+    await this.$connect();
   }
-}
 
-function getFileName(file: string): string {
-  return file.split(/[\/\\]/).pop();
-}
-
-function createModelExtends(prismaClient: PrismaClient) {
-  prismaClient.$extends({
-    result: {
-      file: {
-        name: {
-          needs: { file: true },
-          compute(data) {
-            return getFileName(data.file);
-          },
-        },
-        ext: {
-          needs: { file: true },
-          compute(data) {
-            return getFileName(data.file).split('.').pop();
-          },
-        },
-        path: {
-          needs: { file: true },
-          compute(data) {
-            const pathArray = data.file.split(/[\/\\]/);
-            return pathArray.slice(0, pathArray.length - 1).join('/') + '/';
-          },
-        },
-      },
-    },
-  });
+  async onModuleDestroy() {
+    await this.$disconnect();
+  }
 }

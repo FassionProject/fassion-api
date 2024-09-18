@@ -14,6 +14,7 @@ import { Audit } from '@src/common/audit/audit.model';
 import { randomUUID } from 'crypto';
 import { ListModel } from '@src/utils/model/list-model.model';
 import { Utils } from '@src/utils/utils';
+import { Prisma } from '@prisma/client';
 @Injectable()
 export class ProductService {
   constructor(
@@ -217,7 +218,7 @@ export class ProductService {
         },
       });
 
-      let result: ProductEntity;
+      let result: Prisma.ProductGetPayload<{}> | null = null;
 
       if (totalDeleted > 0) {
         result = await t.product.delete({
