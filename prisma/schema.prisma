@@ -34,7 +34,7 @@ model File {
 model ProductCategory {
   id            String            @id @default(uuid()) @map("id")
   parentId      String?           @map("parent_id")
-  description   String            @unique @map("description")
+  description   String            @map("description")
   products      Product[]
   parent        ProductCategory?  @relation("parent_category", fields: [parentId], references: [id])
   subCategories ProductCategory[] @relation("parent_category")

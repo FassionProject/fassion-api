@@ -28,6 +28,10 @@ export class ErrorFilter<T> implements ExceptionFilter {
     const response = ctx.getResponse();
     const request = ctx.getRequest();
 
+    let message: string = 'API Internal Server Error';
+    let errors: Record<string, any> = {};
+    let status: number = 500;
+
     if (exception instanceof ZodError) {
       response.status(200).json(
         JsonResponse.error({
@@ -39,17 +43,40 @@ export class ErrorFilter<T> implements ExceptionFilter {
     } else if (exception instanceof HttpException) {
       response.status(200).json(
         JsonResponse.error({
-          errors: exception.getResponse(),
+          errors: exception,
           message: exception.message,
           status: exception.getStatus(),
+        }),
+      );
+    } else if (exception instanceof PrismaClientKnownRequestError) {
+      if (exception.code === 'P2002') {
+        message = 'Record already exists';
+        for (const [key, value] of Object.entries(exception.meta.target)) {
+          errors[value] = `${value} already exists`;
+        }
+      } else if (exception.code === 'P2003') {
+        message = 'Foreign Key Constraint Error';
+        for (const [key, value] of Object.entries(exception.meta)) {
+          errors[key] = value;
+        }
+      } else {
+        message = exception.name;
+        errors = exception.meta;
+      }
+
+      response.status(200).json(
+        JsonResponse.error({
+          errors: errors,
+          message: message,
+          status: 422,
         }),
       );
     } else {
       response.status(200).json(
         JsonResponse.error({
           errors: exception,
-          message: 'API Internal Server Error',
-          status: 500,
+          message: message,
+          status: status,
         }),
       );
     }

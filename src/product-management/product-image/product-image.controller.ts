@@ -25,7 +25,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { ListModel } from '@src/utils/model/list-model.model';
 
 @ApiTags('ProductImage')
-@Controller('ProductImage')
+@Controller('product-image')
 export class ProductImageController {
   constructor(private readonly productImageService: ProductImageService) {}
 

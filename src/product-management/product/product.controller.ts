@@ -7,9 +7,7 @@ import {
   Param,
   Delete,
   Query,
-  applyDecorators,
   UseInterceptors,
-  UploadedFile,
   UploadedFiles,
 } from '@nestjs/common';
 import {
@@ -19,49 +17,19 @@ import {
   UpdateProductRequest,
 } from './product.model';
 import { ProductService } from './product.service';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import {
-  ApiBody,
-  ApiConsumes,
-  ApiExtraModels,
-  ApiQuery,
-  ApiTags,
-} from '@nestjs/swagger';
-import { response } from 'express';
-import { ApiCreatedJsonResponse } from '../../utils/json-response/json-response.decorator';
+  ApiCreatedJsonResponse,
+  ApiDeletedJsonResponse,
+  ApiGetJsonResponse,
+  ApiListJsonResponse,
+  ApiUpdatedJsonResponse,
+} from '../../utils/json-response/json-response.decorator';
 import { AuditInfo } from '@src/common/audit/audit.decorator';
 import { Audit } from '@src/common/audit/audit.model';
 import { ListModel } from '@src/utils/model/list-model.model';
 import 'reflect-metadata';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-
-export function ApiQueriesFromRequest() {
-  const decorators = [];
-  const requestInstance = new ProductGetAllRequest();
-  const keys = Object.keys(requestInstance);
-
-  console.info('keys', keys);
-
-  keys.forEach((key) => {
-    const metadata = Reflect.getMetadata(
-      'swagger/apiModelPropertiesArray',
-      ProductGetAllRequest.prototype,
-      key,
-    );
-    console.info('metadata', metadata);
-    if (metadata) {
-      console.info('key', key);
-      decorators.push(
-        ApiQuery({
-          name: key,
-          type: metadata.type,
-          required: metadata.required,
-        }),
-      );
-    }
-  });
-
-  return applyDecorators(...decorators);
-}
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Product')
 @Controller('Product')
@@ -71,7 +39,7 @@ export class ProductController {
   @Post()
   @UseInterceptors(FilesInterceptor('images'))
   @ApiCreatedJsonResponse(ProductEntity)
-  @ApiConsumes('multipart/form-data')
+  // @ApiConsumes('multipart/form-data')
   async create(
     @UploadedFiles() images: Express.Multer.File[],
     @Body() product: CreateProductRequest,
@@ -81,7 +49,7 @@ export class ProductController {
   }
 
   @Get()
-  @ApiQueriesFromRequest()
+  @ApiListJsonResponse(ProductEntity)
   async findAll(
     @Query() request: ProductGetAllRequest,
   ): Promise<ListModel<ProductEntity>> {
@@ -89,6 +57,7 @@ export class ProductController {
   }
 
   @Get('seller')
+  @ApiListJsonResponse(ProductEntity)
   async findAllBySeller(
     @Query('sellerId') sellerId: string,
     @Query() request: ProductGetAllRequest,
@@ -97,11 +66,13 @@ export class ProductController {
   }
 
   @Get(':id')
+  @ApiGetJsonResponse(ProductEntity)
   async findOne(@Param('id') id: string): Promise<ProductEntity> {
     return await this.productService.findOne(id);
   }
 
   @Patch(':id')
+  @ApiUpdatedJsonResponse(ProductEntity)
   async update(
     @Param('id') id: string,
     @Body() product: UpdateProductRequest,
@@ -111,6 +82,7 @@ export class ProductController {
   }
 
   @Delete(':id')
+  @ApiDeletedJsonResponse(ProductEntity)
   async remove(
     @Param('id') id: string,
     @AuditInfo() audit: Audit,

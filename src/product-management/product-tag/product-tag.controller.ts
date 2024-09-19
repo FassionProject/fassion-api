@@ -21,7 +21,7 @@ import { ApiCreatedJsonResponse } from '@src/utils/json-response/json-response.d
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('ProductTag')
-@Controller('ProductTag')
+@Controller('product-tag')
 export class ProductTagController {
   constructor(private readonly productTagService: ProductTagService) {}
 

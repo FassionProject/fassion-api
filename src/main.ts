@@ -16,7 +16,7 @@ async function bootstrap() {
   app.useLogger(loggerService);
 
   app.useGlobalInterceptors(new HTTPLogInterceptor());
-  // app.useGlobalInterceptors(new JsonResponseInterceptor());
+  app.useGlobalInterceptors(new JsonResponseInterceptor());
 
   Document.setup(app);
 

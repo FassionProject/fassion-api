@@ -15,6 +15,7 @@ import { Audit } from '../../common/audit/audit.model';
 import { Utils } from '../../utils/utils';
 import { Prisma } from '@prisma/client';
 import { ListModel } from '@src/utils/model/list-model.model';
+import { ZodError } from 'zod';
 
 @Injectable()
 export class ProductCategoryService {

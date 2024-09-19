@@ -72,7 +72,7 @@ export class CreateProductRequest {
   @ApiProperty({ example: randomUUID(), required: false })
   categoryId: string;
 
-  @ApiProperty()
+  @ApiProperty({ type: String, isArray: true, required: true })
   tagsId: string[];
 
   @ApiProperty({ example: 'Kaos Oblong', required: true })
@@ -90,13 +90,13 @@ export class CreateProductRequest {
   @ApiProperty({ example: 10, required: true })
   stock?: number;
 
-  @ApiProperty({
-    type: 'file',
-    required: false,
-    isArray: true,
-    format: 'binary',
-  })
-  images?: Express.Multer.File;
+  // @ApiProperty({
+  //   type: 'file',
+  //   required: false,
+  //   isArray: true,
+  //   format: 'binary',
+  // })
+  // images?: Express.Multer.File;
 }
 
 export class UpdateProductRequest {
@@ -141,7 +141,7 @@ export class ProductGetAllRequest {
   @ApiProperty({ required: false })
   categoryId?: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, isArray: true })
   tagsId?: string[];
 
   @ApiProperty({ required: false })
