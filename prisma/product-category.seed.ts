@@ -38,6 +38,13 @@ export class ProductCategorySeeder {
   ];
 
   async seed() {
+    await this.prisma.product.deleteMany({
+      where: {
+        category: {
+          createdBy: auditInfo.createdBy,
+        },
+      },
+    });
     await this.prisma.productCategory.deleteMany({
       where: {
         createdBy: auditInfo.createdBy,

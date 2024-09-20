@@ -75,7 +75,7 @@ model ProductImage {
   id        String  @id @default(uuid())
   productId String  @map("product_id")
   image     String  @unique @map("image")
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   createdAt DateTime  @default(now()) @map("created_at")
   createdBy String    @map("created_by")
