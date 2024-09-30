@@ -3,6 +3,7 @@ import {
   ExecutionContext,
   Injectable,
   NestInterceptor,
+  StreamableFile,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -16,6 +17,10 @@ export class JsonResponseInterceptor implements NestInterceptor {
     const response = context.switchToHttp().getResponse();
     return next.handle().pipe(
       map((data) => {
+        if (data instanceof StreamableFile) {
+          return data;
+        }
+
         return JsonResponse.success({
           data: data,
         });

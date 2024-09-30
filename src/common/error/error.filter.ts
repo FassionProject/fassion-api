@@ -71,6 +71,21 @@ export class ErrorFilter<T> implements ExceptionFilter {
           status: 422,
         }),
       );
+    } else if (exception instanceof PrismaClientUnknownRequestError) {
+      message = exception.message;
+      status = 422;
+      errors = {
+        clientVersion: exception.clientVersion,
+        batchRequestIdx: exception.batchRequestIdx,
+        stack: exception.stack,
+      };
+      response.status(200).json(
+        JsonResponse.error({
+          errors: errors,
+          message: message,
+          status: 500,
+        }),
+      );
     } else {
       response.status(200).json(
         JsonResponse.error({

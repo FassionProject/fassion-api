@@ -4,7 +4,6 @@ import { DatabaseService } from '../database/database.service';
 import { ValidationService } from '../validation/validation.service';
 import { Audit } from '../audit/audit.model';
 import { Prisma, PrismaClient } from '@prisma/client';
-import { DefaultArgs } from '@prisma/client/runtime/library';
 
 @Injectable()
 export class FileManagerService {

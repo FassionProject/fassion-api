@@ -124,7 +124,7 @@ export class ProductTagService {
         }),
       );
 
-      return { productTag: result };
+      return { productTag: new ProductTagEntity(result) };
     });
     return productTag;
   }

@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.0.x"]
+  output        = "../client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model File {
+  file     String @id @map("file")
+  mimetype String @map("mimetype")
+  content  Bytes  @map("content")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  createdBy String    @map("created_by")
+  createdIp String    @map("created_ip")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  updatedBy String    @map("updated_by")
+  updatedIp String    @map("updated_ip")
+  deletedAt DateTime? @map("deleted_at")
+  deletedBy String?   @map("deleted_by")
+  deletedIp String?   @map("deleted_ip")
+
+  @@map("file")
+}
+
+model ProductCategory {
+  id            String            @id @default(uuid()) @map("id")
+  parentId      String?           @map("parent_id")
+  description   String            @map("description")
+  products      Product[]
+  parent        ProductCategory?  @relation("parent_category", fields: [parentId], references: [id])
+  subCategories ProductCategory[] @relation("parent_category")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  createdBy String    @map("created_by")
+  createdIp String    @map("created_ip")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  updatedBy String    @map("updated_by")
+  updatedIp String    @map("updated_ip")
+  deletedAt DateTime? @map("deleted_at")
+  deletedBy String?   @map("deleted_by")
+  deletedIp String?   @map("deleted_ip")
+
+  @@map("product_category")
+}
+
+model ProductTag {
+  id          String    @id @default(uuid()) @map("id")
+  storeId     String?   @map("store_id")
+  description String    @unique @map("description")
+  products    Product[] @relation(name: "product_to_tag")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  createdBy String    @map("created_by")
+  createdIp String    @map("created_ip")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  updatedBy String    @map("updated_by")
+  updatedIp String    @map("updated_ip")
+  deletedAt DateTime? @map("deleted_at")
+  deletedBy String?   @map("deleted_by")
+  deletedIp String?   @map("deleted_ip")
+
+  @@map("product_tag")
+}
+
+model ProductImage {
+  id        String  @id @default(uuid())
+  productId String  @map("product_id")
+  image     String  @unique @map("image")
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  createdBy String    @map("created_by")
+  createdIp String    @map("created_ip")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  updatedBy String    @map("updated_by")
+  updatedIp String    @map("updated_ip")
+  deletedAt DateTime? @map("deleted_at")
+  deletedBy String?   @map("deleted_by")
+  deletedIp String?   @map("deleted_ip")
+
+  @@map("product_image")
+}
+
+model Product {
+  id          String          @id @default(uuid()) @map("id")
+  storeId     String?         @map("store_id")
+  categoryId  String          @map("category_id")
+  name        String          @unique @map("name")
+  description String          @map("description")
+  thumbnail   String?         @map("thumbnail")
+  price       Float           @map("price")
+  stock       Int             @map("stock")
+  category    ProductCategory @relation(fields: [categoryId], references: [id])
+  tags        ProductTag[]    @relation("product_to_tag")
+  images      ProductImage[]
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  createdBy String    @map("created_by")
+  createdIp String    @map("created_ip")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  updatedBy String    @map("updated_by")
+  updatedIp String    @map("updated_ip")
+  deletedAt DateTime? @map("deleted_at")
+  deletedBy String?   @map("deleted_by")
+  deletedIp String?   @map("deleted_ip")
+
+  @@map("product")
+}
