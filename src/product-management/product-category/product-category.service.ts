@@ -149,17 +149,17 @@ export class ProductCategoryService {
     });
   }
 
-  mappingChild(obj, source: any) {
-    return obj.map((o) => {
-      const children = source.filter((x) => x.parentId == o.id);
+  // mappingChild(obj, source: any) {
+  //   return obj.map((o) => {
+  //     const children = source.filter((x) => x.parentId == o.id);
 
-      o.subCategories = this.mappingChild(children, source);
+  //     o.subCategories = this.mappingChild(children, source);
 
-      return o;
-    });
-  }
+  //     return o;
+  //   });
+  // }
 
-  async findOne(id: string): Promise<any> {
+  async findOne(id: string): Promise<ProductCategoryEntity> {
     // return fields;
 
     const result = await this.db.$transaction(async (t) => {
@@ -239,7 +239,7 @@ export class ProductCategoryService {
         },
       });
 
-      let result: any = {};
+      let result: Prisma.ProductCategoryGetPayload<{}> | null = null;
 
       if (totalDeleted == 0) {
         result = await t.productCategory.update({

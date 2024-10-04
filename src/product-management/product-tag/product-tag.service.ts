@@ -167,7 +167,7 @@ export class ProductTagService {
         },
       });
 
-      let result: any = {};
+      let result: Prisma.ProductTagGetPayload<{}> | null = null;
 
       if (totalDeleted == 0) {
         result = await t.productTag.update({

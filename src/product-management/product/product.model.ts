@@ -6,57 +6,57 @@ import { ProductCategoryEntity } from '../product-category/product-category.mode
 
 export class ProductEntity implements Prisma.ProductGetPayload<{}> {
   @ApiProperty({ example: randomUUID() })
-  id: string | null = null;
+  id: string | null;
 
   @ApiProperty({ example: randomUUID() })
-  storeId: string | null = null;
+  storeId: string | null;
 
   @ApiProperty({ example: randomUUID() })
-  categoryId: string | null = null;
+  categoryId: string | null;
 
   @ApiProperty({ example: 'Kaos Oblong' })
-  name: string | null = null;
+  name: string | null;
 
   @ApiProperty({
     example: 'Kaos nyaman di pakai untuk kamu. Tersedia warna putih dan hitam',
   })
-  description: string | null = null;
+  description: string | null;
 
   @ApiProperty({ example: null })
   thumbnail: string | null;
 
   @ApiProperty({ example: 50000 })
-  price: number | null = null;
+  price: number | null;
 
   @ApiProperty({ example: 10 })
-  stock: number | null = null;
+  stock: number | null;
 
   @ApiProperty({ example: moment().toDate() })
-  createdAt: Date | null = null;
+  createdAt: Date | null;
 
   @ApiProperty({ example: 'Admin' })
-  createdBy: string | null = null;
+  createdBy: string | null;
 
   @ApiProperty({ example: '127.0.0.1' })
-  createdIp: string | null = null;
+  createdIp: string | null;
 
   @ApiProperty({ example: moment().toDate() })
-  updatedAt: Date | null = null;
+  updatedAt: Date | null;
 
   @ApiProperty({ example: 'Admin' })
-  updatedBy: string | null = null;
+  updatedBy: string | null;
 
   @ApiProperty({ example: '127.0.0.1' })
-  updatedIp: string | null = null;
+  updatedIp: string | null;
 
   @ApiProperty({ example: null })
-  deletedAt: Date | null = null;
+  deletedAt: Date | null;
 
   @ApiProperty({ example: null })
-  deletedBy: string | null = null;
+  deletedBy: string | null;
 
   @ApiProperty({ example: null })
-  deletedIp: string | null = null;
+  deletedIp: string | null;
 
   constructor(partial: Partial<ProductEntity>) {
     // partial.category =

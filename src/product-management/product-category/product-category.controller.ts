@@ -38,7 +38,7 @@ export class ProductCategoryController {
   async create(
     @Body() request: CreateProductCategoryRequest,
     @AuditInfo() audit: Audit,
-  ): Promise<any> {
+  ): Promise<ProductCategoryEntity> {
     return await this.productCategoryService.create(request, audit);
   }
 

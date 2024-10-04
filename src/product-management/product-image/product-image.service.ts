@@ -166,7 +166,7 @@ export class ProductImageService {
         },
       });
 
-      let result: any = {};
+      let result: Prisma.ProductImageGetPayload<{}> | null = null;
 
       this.fileManager.delete(productImage.image, audit);
 

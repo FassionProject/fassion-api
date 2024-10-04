@@ -32,7 +32,7 @@ import 'reflect-metadata';
 import { FilesInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Product')
-@Controller('Product')
+@Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
@@ -44,7 +44,7 @@ export class ProductController {
     @UploadedFiles() images: Express.Multer.File[],
     @Body() product: CreateProductRequest,
     @AuditInfo() audit: Audit,
-  ): Promise<any> {
+  ): Promise<ProductEntity> {
     return await this.productService.create(product, audit);
   }
 

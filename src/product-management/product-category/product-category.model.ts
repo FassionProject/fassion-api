@@ -8,48 +8,48 @@ export class ProductCategoryEntity
   implements Prisma.ProductCategoryGetPayload<{ include: { parent: true } }>
 {
   @ApiProperty({ example: randomUUID() })
-  id: string | null = null;
+  id: string | null;
 
   @ApiProperty({ example: null })
-  parentId: string | null = null;
+  parentId: string | null;
 
   @ApiProperty({ example: 'Kaos' })
-  description: string | null = null;
+  description: string | null;
 
   @ApiProperty()
-  parent: ProductCategoryEntity | null = null;
+  parent: ProductCategoryEntity | null;
 
   @ApiProperty({ type: [ProductEntity] })
   products: ProductEntity[] = [];
 
   @ApiProperty({ example: moment().toDate() })
-  createdAt: Date | null = null;
+  createdAt: Date | null;
 
   @ApiProperty({ example: 'Admin' })
-  createdBy: string | null = null;
+  createdBy: string | null;
 
   @ApiProperty({ example: '127.0.0.1' })
-  createdIp: string | null = null;
+  createdIp: string | null;
 
   @ApiProperty({ example: moment().toDate() })
-  updatedAt: Date | null = null;
+  updatedAt: Date | null;
 
   @ApiProperty({ example: 'Admin' })
-  updatedBy: string | null = null;
+  updatedBy: string | null;
 
   @ApiProperty({ example: '127.0.0.1' })
-  updatedIp: string | null = null;
+  updatedIp: string | null;
 
   @ApiProperty({ example: null })
-  deletedAt: Date | null = null;
+  deletedAt: Date | null;
 
   @ApiProperty({ example: null })
-  deletedBy: string | null = null;
+  deletedBy: string | null;
 
   @ApiProperty({ example: null })
-  deletedIp: string | null = null;
+  deletedIp: string | null;
 
-  constructor(partial: Partial<ProductEntity>) {
+  constructor(partial: Partial<ProductCategoryEntity>) {
     Object.assign(this, partial);
   }
 }

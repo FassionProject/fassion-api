@@ -20,31 +20,31 @@ export class ProductTagEntity
   products: ProductEntity[];
 
   @ApiProperty({ example: moment().toDate() })
-  createdAt: Date | null = null;
+  createdAt: Date | null;
 
   @ApiProperty({ example: 'Admin' })
-  createdBy: string | null = null;
+  createdBy: string | null;
 
   @ApiProperty({ example: '127.0.0.1' })
-  createdIp: string | null = null;
+  createdIp: string | null;
 
   @ApiProperty({ example: moment().toDate() })
-  updatedAt: Date | null = null;
+  updatedAt: Date | null;
 
   @ApiProperty({ example: 'Admin' })
-  updatedBy: string | null = null;
+  updatedBy: string | null;
 
   @ApiProperty({ example: '127.0.0.1' })
-  updatedIp: string | null = null;
+  updatedIp: string | null;
 
   @ApiProperty({ example: null })
-  deletedAt: Date | null = null;
+  deletedAt: Date | null;
 
   @ApiProperty({ example: null })
-  deletedBy: string | null = null;
+  deletedBy: string | null;
 
   @ApiProperty({ example: null })
-  deletedIp: string | null = null;
+  deletedIp: string | null;
 
   constructor(partial: Partial<ProductTagEntity>) {
     Object.assign(this, partial);

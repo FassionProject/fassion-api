@@ -20,6 +20,8 @@ async function bootstrap() {
 
   Document.setup(app);
 
+  app.enableCors({});
+
   await app.listen(3000);
 }
 bootstrap();

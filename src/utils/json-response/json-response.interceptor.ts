@@ -21,6 +21,10 @@ export class JsonResponseInterceptor implements NestInterceptor {
           return data;
         }
 
+        if (data instanceof Object) {
+          data = Object.keys(data).length ? data : null;
+        }
+
         return JsonResponse.success({
           data: data,
         });

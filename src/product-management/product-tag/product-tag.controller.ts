@@ -30,7 +30,7 @@ export class ProductTagController {
   async create(
     @Body() request: CreateProductTagRequest,
     @AuditInfo() audit: Audit,
-  ): Promise<any> {
+  ): Promise<ProductTagEntity> {
     return await this.productTagService.create(request, audit);
   }
 
